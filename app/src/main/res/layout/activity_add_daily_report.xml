@@ -19,13 +19,14 @@
             android:padding="10dp">
 
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Current Date" />
 
             <TextView
-                android:id="@+id/txt_date"
+                android:id="@+id/tvDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -41,7 +42,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:orientation="vertical">
 
@@ -117,7 +118,6 @@
 
 
 
-
             </LinearLayout>
 
         </LinearLayout>
@@ -137,13 +137,18 @@
 
         </ScrollView>-->
 
-        <androidx.recyclerview.widget.RecyclerView
+
+       <!-- <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_report"
             tools:listitem="row_daily_report_added"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp" />-->
 
     </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/image_view"/>
 
 </LinearLayout>
