@@ -65,7 +65,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/edt_report"
+                        android:id="@+id/etTopic"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -138,17 +138,24 @@
         </ScrollView>-->
 
 
-       <!-- <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list_report"
-            tools:listitem="row_daily_report_added"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp" />-->
+
 
     </LinearLayout>
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/image_view"/>
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/iv_Icon"/>
+
+     <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/listreport"
+            tools:listitem="row_daily_report_added"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp" />
 
 </LinearLayout>

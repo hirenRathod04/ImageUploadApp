@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
@@ -20,6 +21,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,8 +47,8 @@ import java.util.Map;
 public class AddDailyReport extends AppCompatActivity {
     ImageButton ibtn_attachment;
     Button btn_add;
-    ImageView imageView;
-
+    ImageView my_image;
+private EditText etTopic;
    private Context context = AddDailyReport.this;
 private String mMonth1;
 private String mDay1;
@@ -55,7 +57,10 @@ private String mDay1;
     TextView tvGetTodayDate;
     private String fileExtension = "";
     private String attachmentBase64String = "";
-
+    private RecyclerView list_report;
+    private   String report;
+   //private String attachmentFileName = "";
+private ImageView iv_Icon;
 
     public AddDailyReport() {
     }
@@ -65,13 +70,16 @@ private String mDay1;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_add_daily_report );
-
+        list_report = findViewById ( R.id.listreport );
         btn_add = findViewById ( R.id.btn_add );
-        imageView = findViewById ( R.id.image_view );
-        ibtn_attachment = (ImageButton) findViewById(R.id.ibtn_attachment);
+        etTopic= findViewById ( R.id.etTopic );
+        my_image = findViewById ( R.id.image_view );
+        ibtn_attachment = (ImageButton) findViewById(R.id.ibtn_attachment);//image button
         tvGetTodayDate = findViewById ( R.id.tvDate );
         mDialog = new ProgressDialog(this);
         mDialog.setCanceledOnTouchOutside(false);
+        report = etTopic.getText ().toString ();
+        iv_Icon = findViewById ( R.id.iv_Icon );
 
         DisplayDate();
         loadDetails();
@@ -79,8 +87,11 @@ private String mDay1;
         btn_add.setOnClickListener ( new View.OnClickListener ( ) {
             @Override
             public void onClick(View v) {
+                add_details();
 
             }
+
+
         } );
 
         ibtn_attachment.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +113,32 @@ private String mDay1;
 
 
     }
+    private void add_details() {
+        if (report.isEmpty()) {
+
+            etTopic.setError("Please enter report.");
+            btn_add.setVisibility(View.VISIBLE);
+            return;
+        }
+        String attachmentFileName = "";
+        if (!TextUtils.isEmpty(attachmentBase64String)) {
+            attachmentFileName = "dailyreport_" + fileExtension;
+        } else {
+            attachmentFileName = "";
+        }
+
+        //addReport( report, attachmentBase64String, attachmentFileName);
+
+    }
+
+   /* private void addReport(String report, String attachmentBase64String, String attachmentFileName) {
+        String a = report;
+        String b = attachmentBase64String;
+        String c = attachmentFileName;
+
+    }*/
+
+   // Myreportall[] myreportall = new Myreportall[]{new Myreportall( report,attachmentBase64String )};
 
     private void openBottomSheet() {
 
@@ -139,30 +176,28 @@ private String mDay1;
         //RESULT FROM SELECTED IMAGE
         if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK)
         {
-
+            Toast.makeText ( context, "1", Toast.LENGTH_SHORT ).show ( );
             Uri imageUri = CropImage.getPickImageResultUri(this, data);
-
             cropRequest(imageUri);
-
 
 
         }
         //RESULT FROM CROP ACTIVITY
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-
+            Toast.makeText ( context, "2", Toast.LENGTH_SHORT ).show ( );
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
             if (resultCode == RESULT_OK) {
                 //showing image.
-                    imageView.setImageURI ( result.getUri () );
+                    my_image.setImageURI ( result.getUri () );
+                Toast.makeText ( context, "3", Toast.LENGTH_SHORT ).show ( );
 
-
-                try {
+                try { Toast.makeText ( context, "4", Toast.LENGTH_SHORT ).show ( );
                     Bitmap bitmapImage = MediaStore.Images.Media.getBitmap(getContentResolver(), result.getUri());
                    // fileExtension = ".jpg";
                     attachmentBase64String = ConvertFileToBase64String.convertBitmapToBase64String(bitmapImage);
                     if (! TextUtils.isEmpty(attachmentBase64String)) {
-                        ibtn_attachment.setImageDrawable(getDrawable(R.drawable.ic_description_gray_24dp));
+                        iv_Icon.setImageDrawable(getDrawable(R.drawable.ic_description_gray_24dp));
                         //ivRemove.setVisibility(View.VISIBLE);
                         Toast.makeText ( context,"attachmentBase64String_got",
                                 Toast.LENGTH_SHORT ).show ();
@@ -171,7 +206,7 @@ private String mDay1;
                     } else {
                         fileExtension = "";
                         attachmentBase64String = "";
-                        ibtn_attachment.setImageDrawable(getDrawable(R.drawable.ic_attach_file_gray_24dp));
+                        iv_Icon.setImageDrawable(getDrawable(R.drawable.ic_attach_file_gray_24dp));
                        // ivRemove.setVisibility(View.INVISIBLE);
 
                     }
@@ -182,7 +217,7 @@ private String mDay1;
             } else {
                 fileExtension = "";
                 attachmentBase64String = "";
-                ibtn_attachment.setImageDrawable(getDrawable(R.drawable.ic_attach_file_gray_24dp));
+                iv_Icon.setImageDrawable(getDrawable(R.drawable.ic_attach_file_gray_24dp));
                // ivRemove.setVisibility(View.INVISIBLE);
             }
         }
